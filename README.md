@@ -16,7 +16,7 @@ MacOS Big Sur due to upstream vendor complication - proceed at your own risk!
 Should you find yourself on a Big Sur machine with an Intel chip, see the section below titled: `Big Sur (Intel) Addendum`
 
 We support:
-
+************** <-- May need to update this MacOS version(?) --> *****************
 * MacOS Catalina (10.15)
 
 Older versions may work but aren't actively tested.
@@ -261,6 +261,28 @@ brew install pipenv
 # version for the Mariana Django project)
 CFLAGS=“-I$(brew --prefix openssl)/include -I$(brew --prefix bzip2)/include -I$(brew --prefix readline)/include -I$(xcrun --show-sdk-path)/usr/include” LDFLAGS=“-L$(brew --prefix openssl)/lib -L$(brew --prefix readline)/lib -L$(brew --prefix zlib)/lib -L$(brew --prefix bzip2)/lib” pyenv install --patch 3.6.8 < <(curl -sSL https://github.com/python/cpython/commit/8ea6353.patch\?full_index\=1)
 ```
+
+Monterey (M1) Addendum
+-----------------------
+
+Since Apple's new M1 chip release, there has been a considerable number of processor-specific errors in regard to Python dependencies that are documented in upstream vendor bug tickets through GitHub. 
+
+The issues that have been experienced so far have revolved around installing the `pienv` tool. The following workaround can be implemented after running the `laptop` script (as of March 2022) that we recommend:
+
+- **AirPlay Receiver:** Navigate to your MacOS `System Preferences`, then select `Sharing`. If the `Airplay Receiver` radio button is selected, make sure to unselect it and ensure you are set to  `AirPlay Receiver: Off`. <-- something about the port used? need clarification please :) -->
+
+- **Rosetta Terminal:** 
+ - Navigate to your MacOS `Finder`, then select your `Applications` folder, then `Utilities`, then right-click your Terminal app and select `Duplicate`.
+ - Rename the newly-duplicated Terminal to an easy-to-remember label (ex: rosetta-terminal).
+ - Right-click the `rosetta-terminal` and click on `Get Info`.
+ - Check the option for **Open using Rosetta**. 
+ - This emulates this terminal environment to i386 (you can verify this by opening `rosetta-terminal`, and running the `arch` command. This should verify the processor emulation is running i386. Your iTerm2 application and native terminal should still show arm64 using the same `arch` command.
+
+- **Manually configure NPM_TOKEN**
+ - Navigate to your `.zshrc` file and open using a code editor/IDE.
+ - append the file by adding in `export NPM_TOKEN="_insert NPM token here as a string value_"`.
+
+**WORK IN PROGRESS**
 
 Credits
 -------
